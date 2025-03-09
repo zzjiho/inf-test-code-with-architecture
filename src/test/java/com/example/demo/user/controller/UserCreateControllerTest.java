@@ -1,7 +1,7 @@
 package com.example.demo.user.controller;
 
 import com.example.demo.user.domain.UserCreate;
-import com.example.demo.user.infrastructure.UserRepository;
+import com.example.demo.user.infrastructure.UserJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -37,7 +37,7 @@ public class UserCreateControllerTest {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserJpaRepository userJpaRepository;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

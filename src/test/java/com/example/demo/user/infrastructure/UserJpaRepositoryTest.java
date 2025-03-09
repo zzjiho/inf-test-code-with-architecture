@@ -14,15 +14,15 @@ import static org.assertj.core.api.Assertions.*;
 @DataJpaTest(showSql = true)
 @TestPropertySource("classpath:test-application.properties")
 @Sql("/sql/user-repository-test-data.sql")
-public class UserRepositoryTest {
+public class UserJpaRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserJpaRepository userJpaRepository;
 
     @Test
     void findByIdAndStatus_로_유저_데이터를_찾아올수_있다() {
         // when
-        Optional<UserEntity> result = userRepository.findByIdAndStatus(1L, UserStatus.ACTIVE);
+        Optional<UserEntity> result = userJpaRepository.findByIdAndStatus(1L, UserStatus.ACTIVE);
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -31,7 +31,7 @@ public class UserRepositoryTest {
     @Test
     void findByIdAndStatus_는_데이터가_없으면_Optional_empty를_내려준다() {
         // when
-        Optional<UserEntity> result = userRepository.findByIdAndStatus(1L, UserStatus.PENDING);
+        Optional<UserEntity> result = userJpaRepository.findByIdAndStatus(1L, UserStatus.PENDING);
 
         // then
         assertThat(result.isEmpty()).isTrue();
@@ -40,7 +40,7 @@ public class UserRepositoryTest {
     @Test
     void findByEmailAndStatus_로_유저_데이터를_찾아올수_있다() {
         // when
-        Optional<UserEntity> result = userRepository.findByEmailAndStatus("ziho1234567890@gmail.com", UserStatus.ACTIVE);
+        Optional<UserEntity> result = userJpaRepository.findByEmailAndStatus("ziho1234567890@gmail.com", UserStatus.ACTIVE);
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -49,7 +49,7 @@ public class UserRepositoryTest {
     @Test
     void findByEmailAndStatus_는_데이터가_없으면_Optional_empty를_내려준다() {
         // when
-        Optional<UserEntity> result = userRepository.findByEmailAndStatus("ziho1234567890@gmail.com", UserStatus.PENDING);
+        Optional<UserEntity> result = userJpaRepository.findByEmailAndStatus("ziho1234567890@gmail.com", UserStatus.PENDING);
 
         // then
         assertThat(result.isEmpty()).isTrue();
