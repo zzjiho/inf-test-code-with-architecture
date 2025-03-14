@@ -1,6 +1,6 @@
 package com.example.demo.user.controller;
 
-import com.example.demo.user.controller.port.UserService;
+import com.example.demo.user.controller.port.*;
 import com.example.demo.user.controller.response.UserResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
@@ -22,21 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserCreateService userCreateService;
+    private final UserReadService userReadService;
+    private final UserUpdateService userUpdateService;
+    private final AuthenticationService authenticationService;
 
     @ResponseStatus
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable long id) {
         return ResponseEntity
             .ok()
-            .body(UserResponse.from(userService.getById(id)));
+            .body(UserResponse.from(userReadService.getById(id)));
     }
 
     @GetMapping("/{id}/verify")
     public ResponseEntity<Void> verifyEmail(
         @PathVariable long id,
         @RequestParam String certificationCode) {
-        userService.verifyEmail(id, certificationCode);
+        authenticationService.verifyEmail(id, certificationCode);
         return ResponseEntity.status(HttpStatus.FOUND)
             .location(URI.create("http://localhost:3000"))
             .build();
