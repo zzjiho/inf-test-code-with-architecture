@@ -29,7 +29,7 @@ public class MyInfoController {
     @GetMapping("/me")
     public ResponseEntity<MyProfileResponse> get(
         @Parameter(name = "EMAIL", in = ParameterIn.HEADER)
-        @RequestHeader("EMAIL") String email // 일반적으로 스프링 시큐리티를 사용한다면 UserPrincipal 에서 가져옵니다.
+        @RequestHeader("EMAIL") String email
     ) {
         User user = userService.getByEmail(email);
         userService.login(user.getId());
@@ -43,7 +43,7 @@ public class MyInfoController {
     @Parameter(in = ParameterIn.HEADER, name = "EMAIL")
     public ResponseEntity<MyProfileResponse> update(
         @Parameter(name = "EMAIL", in = ParameterIn.HEADER)
-        @RequestHeader("EMAIL") String email, // 일반적으로 스프링 시큐리티를 사용한다면 UserPrincipal 에서 가져옵니다.
+        @RequestHeader("EMAIL") String email,
         @RequestBody UserUpdate userUpdate
     ) {
         User user = userService.getByEmail(email);

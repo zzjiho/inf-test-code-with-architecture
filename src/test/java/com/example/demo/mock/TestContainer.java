@@ -11,6 +11,7 @@ import com.example.demo.user.controller.MyInfoController;
 import com.example.demo.user.controller.UserController;
 import com.example.demo.user.controller.UserCreateController;
 import com.example.demo.user.controller.port.AuthenticationService;
+import com.example.demo.user.controller.port.UserCreateService;
 import com.example.demo.user.controller.port.UserReadService;
 import com.example.demo.user.controller.port.UserUpdateService;
 import com.example.demo.user.service.CertificationService;
@@ -27,10 +28,13 @@ public class TestContainer {
     public final PostRepository postRepository;
     public final UserReadService userReadService;
     public final UserUpdateService userUpdateService;
-    public final UserUpdateService userCreateService;
+    public final UserCreateService userCreateService;
     public final AuthenticationService authenticationService;
     public final PostService postService;
     public final CertificationService certificationService;
+    public final UserController userController;
+    public final MyInfoController myInfoController;
+    public final UserCreateController userCreateController;
 
     @Builder
     public TestContainer(ClockHolder clockHolder, UuidHolder uuidHolder) {
@@ -53,5 +57,17 @@ public class TestContainer {
         this.userUpdateService = userService;
         this.userCreateService = userService;
         this.authenticationService = userService;
+        this.userController = UserController.builder()
+                .userCreateService(this.userCreateService)
+                .userReadService(this.userReadService)
+                .userUpdateService(this.userUpdateService)
+                .authenticationService(this.authenticationService)
+                .build();
+        this.myInfoController = MyInfoController.builder()
+                .userService(userService)
+                .build();
+        this.userCreateController = UserCreateController.builder()
+                .userCreateService(this.userCreateService)
+                .build();
     }
 }
